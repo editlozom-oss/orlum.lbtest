@@ -26,7 +26,6 @@
             --nav-h: 100px;
             --shadow-float: 0 15px 35px rgba(0, 0, 0, 0.1);
             --shadow-hover: 0 25px 50px rgba(0, 0, 0, 0.15);
-            --shadow-pressed: 0 5px 15px rgba(0, 0, 0, 0.08);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -63,28 +62,31 @@
         .social-icons a { color: var(--dark); font-size: 22px; transition: 0.3s; }
 
         .lang-btn {
-            background: var(--dark);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            font-size: 11px;
-            cursor: pointer;
-            text-transform: uppercase;
+            background: var(--dark); color: white; border: none;
+            padding: 8px 15px; font-size: 11px; cursor: pointer; text-transform: uppercase;
         }
 
-        /* --- HERO --- */
-        section { padding: 140px 5% 60px; max-width: 1400px; margin: 0 auto; }
-        .hero-title { font-family: var(--font-serif); font-size: clamp(34px, 8vw, 80px); line-height: 1.1; color: var(--dark); margin-bottom: 40px; text-align: left; }
+        /* --- LAYOUT SECTIONS --- */
+        section { padding: 140px 5% 40px; max-width: 1400px; margin: 0 auto; }
+        .category-section { padding: 40px 5% 80px; max-width: 1400px; margin: 0 auto; }
+
+        .hero-title { font-family: var(--font-serif); font-size: clamp(34px, 8vw, 80px); line-height: 1.1; color: var(--dark); margin-bottom: 40px; }
         
-        .main-image-container { 
-            position: relative; 
-            width: 100%; 
-            aspect-ratio: 16/9; 
-            cursor: pointer; 
-            overflow: hidden; 
-            box-shadow: var(--shadow-float);
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
-            border-radius: 2px;
+        .section-header { 
+            border-bottom: 1px solid rgba(26, 60, 74, 0.2); 
+            margin-bottom: 40px; 
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        
+        .section-header h2 { 
+            font-family: var(--font-serif); 
+            font-size: clamp(24px, 4vw, 36px); 
+            color: var(--dark); 
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         /* --- PRODUCTS GRID --- */
@@ -92,7 +94,6 @@
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
             gap: 30px; 
-            margin-top: 50px;
         }
         
         .work-card { 
@@ -102,110 +103,77 @@
             transition: 0.3s ease;
         }
 
-        .work-img-box { 
-            width: 100%; 
-            aspect-ratio: 1/1; 
-            overflow: hidden; 
-            cursor: pointer; 
-            box-shadow: var(--shadow-float);
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+        /* Highlight for Customized Product */
+        .work-card.featured {
+            border: 1px solid var(--accent);
+            position: relative;
         }
-
-        /* INTERACTIONS */
-        .main-image-container:hover, .work-img-box:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .main-image-container img, .work-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-        .main-image-container:hover img, .work-img-box:hover img { transform: scale(1.04); }
-        
-        .work-info { padding: 25px 20px; text-align: center; }
-        .work-title { font-family: var(--font-serif); font-size: 24px; margin-bottom: 20px; color: var(--dark); }
-
-        /* --- PRO SIZE SELECTION --- */
-        .order-options { margin-bottom: 25px; text-align: left; }
-        .order-options label { 
-            font-size: 10px; 
-            text-transform: uppercase; 
-            color: var(--accent); 
-            display: block; 
-            margin-bottom: 12px; 
-            font-weight: 600;
+        .work-card.featured::before {
+            content: "SPECIAL";
+            position: absolute;
+            top: 10px; left: 10px;
+            background: var(--accent);
+            color: white;
+            font-size: 10px;
+            padding: 3px 10px;
+            z-index: 10;
             letter-spacing: 1px;
         }
 
-        .size-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        .work-img-box { 
+            width: 100%; aspect-ratio: 1/1; 
+            overflow: hidden; cursor: pointer; 
+            box-shadow: var(--shadow-float);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
+        .work-img-box:hover { transform: translateY(-8px); }
+        .work-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+        .work-img-box:hover img { transform: scale(1.05); }
+        
+        .work-info { padding: 25px 20px; text-align: center; }
+        .work-title { font-family: var(--font-serif); font-size: 22px; margin-bottom: 20px; color: var(--dark); }
+
+        /* --- SIZE TILES --- */
+        .order-options { margin-bottom: 25px; text-align: left; }
+        .order-options label { font-size: 10px; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 12px; font-weight: 600; }
+
+        .size-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .size-option input { display: none; }
         .size-option label {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 5px;
-            border: 1px solid #eee;
-            background: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 12px 5px; border: 1px solid #eee; background: #fff;
+            cursor: pointer; transition: 0.3s;
         }
-
         .size-name { font-size: 13px; font-weight: 500; color: var(--dark); }
         .size-price { font-size: 11px; color: #888; }
 
-        .size-option label:hover { border-color: var(--accent); background: #fcfaf5; }
-        .size-option input:checked + label {
-            background: var(--dark);
-            border-color: var(--dark);
-        }
+        .size-option input:checked + label { background: var(--dark); border-color: var(--dark); }
         .size-option input:checked + label .size-name,
         .size-option input:checked + label .size-price { color: white; }
 
         .order-btn {
-            display: block;
-            text-decoration: none;
-            color: white;
-            background: var(--dark);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            padding: 14px;
-            transition: 0.3s;
+            display: block; text-decoration: none; color: white;
+            background: var(--dark); font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.15em; padding: 14px; transition: 0.3s;
         }
-
-        .order-btn:hover {
-            background: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(196, 169, 122, 0.3);
-        }
+        .order-btn:hover { background: var(--accent); transform: translateY(-2px); }
 
         /* --- LIGHTBOX --- */
-        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 10000; padding: 20px; }
-        #lightbox img { max-width: 100%; max-height: 85vh; }
+        #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 10000; }
+        #lightbox img { max-width: 90%; max-height: 80vh; }
         #lightbox-close { position: absolute; top: 20px; right: 25px; color: white; font-size: 40px; cursor: pointer; }
 
-        /* --- FOOTER --- */
         footer { padding: 60px 5% 40px; text-align: center; border-top: 1px solid rgba(0,0,0,0.05); }
         .footer-logo { height: 45px; margin-bottom: 20px; opacity: 0.7; }
         .rights-text { font-size: 9px; letter-spacing: 2px; color: #aaa; text-transform: uppercase; }
 
-        /* --- MOBILE OPTIMIZATION --- */
         @media (max-width: 768px) {
-            :root { --nav-h: 80px; }
-            section { padding-top: 110px; }
-            .hero-title { text-align: center; }
-            .grid-container { grid-template-columns: 1fr; gap: 40px; }
+            .grid-container { grid-template-columns: 1fr; }
             .logo-text { display: none; }
             body.ar { direction: rtl; }
+            body.ar .order-options { text-align: right; }
         }
-
-        body.ar { font-family: var(--font-arabic); }
-        body.ar .logo-sub { letter-spacing: 0; }
-        body.ar .order-options { text-align: right; }
     </style>
 </head>
 <body class="en">
@@ -231,110 +199,170 @@
         <img id="lightbox-img" src="" alt="Zoomed View">
     </div>
 
-    <section id="main">
+    <!-- MAIN HERO -->
+    <section>
         <h1 class="hero-title" data-en="Visuals for the<br>Modern Aesthetic" data-ar="رؤية بصرية<br>للعصر الحديث">Visuals for the<br>Modern Aesthetic</h1>
-        <div class="main-image-container lightbox-trigger">
-            <img src="images/main.jpg" alt="Featured Visual">
-        </div>
-
-        <div class="grid-container">
-            <!-- Product 1 -->
-            <div class="work-card">
-                <div class="work-img-box lightbox-trigger">
-                    <img src="images/work1.jpg" alt="Midnight Series">
-                </div>
-                <div class="work-info">
-                    <h3 class="work-title" data-en="Midnight Series" data-ar="سلسلة منتصف الليل">Midnight Series</h3>
-                    <div class="order-options">
-                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
-                        <div class="size-grid">
-                            <div class="size-option">
-                                <input type="radio" name="size1" id="s1-1" checked>
-                                <label for="s1-1"><span class="size-name">20 * 30</span><span class="size-price">$15</span></label>
-                            </div>
-                            <div class="size-option">
-                                <input type="radio" name="size1" id="s1-2">
-                                <label for="s1-2"><span class="size-name">30 * 40</span><span class="size-price">$20</span></label>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="https://ig.me/m/orlume.lb?text=Order: Midnight Series" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
-                </div>
-            </div>
-
-            <!-- Product 2 -->
-            <div class="work-card">
-                <div class="work-img-box lightbox-trigger">
-                    <img src="images/work2.jpg" alt="Acrylic Signage">
-                </div>
-                <div class="work-info">
-                    <h3 class="work-title" data-en="Acrylic Signage" data-ar="لوحات أكرليك">Acrylic Signage</h3>
-                    <div class="order-options">
-                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
-                        <div class="size-grid">
-                            <div class="size-option">
-                                <input type="radio" name="size2" id="s2-1" checked>
-                                <label for="s2-1"><span class="size-name">20 * 30</span><span class="size-price">$15</span></label>
-                            </div>
-                            <div class="size-option">
-                                <input type="radio" name="size2" id="s2-2">
-                                <label for="s2-2"><span class="size-name">30 * 40</span><span class="size-price">$20</span></label>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="https://ig.me/m/orlume.lb?text=Order: Acrylic Signage" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="work-card">
-                <div class="work-img-box lightbox-trigger">
-                    <img src="images/work3.jpg" alt="Minimalist Frame">
-                </div>
-                <div class="work-info">
-                    <h3 class="work-title" data-en="Minimalist Frame" data-ar="إطار بسيط">Minimalist Frame</h3>
-                    <div class="order-options">
-                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
-                        <div class="size-grid">
-                            <div class="size-option">
-                                <input type="radio" name="size3" id="s3-1" checked>
-                                <label for="s3-1"><span class="size-name">20 * 30</span><span class="size-price">$15</span></label>
-                            </div>
-                            <div class="size-option">
-                                <input type="radio" name="size3" id="s3-2">
-                                <label for="s3-2"><span class="size-name">30 * 40</span><span class="size-price">$20</span></label>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="https://ig.me/m/orlume.lb?text=Order: Minimalist Frame" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="work-card">
-                <div class="work-img-box lightbox-trigger">
-                    <img src="images/work4.jpg" alt="Layered Art">
-                </div>
-                <div class="work-info">
-                    <h3 class="work-title" data-en="Layered Art" data-ar="فن الطبقات">Layered Art</h3>
-                    <div class="order-options">
-                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
-                        <div class="size-grid">
-                            <div class="size-option">
-                                <input type="radio" name="size4" id="s4-1" checked>
-                                <label for="s4-1"><span class="size-name">20 * 30</span><span class="size-price">$15</span></label>
-                            </div>
-                            <div class="size-option">
-                                <input type="radio" name="size4" id="s4-2">
-                                <label for="s4-2"><span class="size-name">30 * 40</span><span class="size-price">$20</span></label>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="https://ig.me/m/orlume.lb?text=Order: Layered Art" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
-                </div>
-            </div>
-        </div>
     </section>
+
+    <!-- FOOTBALL ART CATEGORY -->
+    <div class="category-section">
+        <div class="section-header">
+            <h2 data-en="Football Art" data-ar="فن كرة القدم">Football Art</h2>
+        </div>
+        <div class="grid-container">
+            <!-- Customized (Stand out) -->
+            <div class="work-card featured">
+                <div class="work-img-box lightbox-trigger">
+                    <img src="images/fb_custom.jpg" alt="Customized Football Art">
+                </div>
+                <div class="work-info">
+                    <h3 class="work-title" data-en="Customized Piece" data-ar="تصميم خاص">Customized Piece</h3>
+                    <div class="order-options">
+                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
+                        <div class="size-grid">
+                            <div class="size-option"><input type="radio" name="f1" id="f1s1" checked><label for="f1s1"><span class="size-name">20*30</span><span class="size-price">$20</span></label></div>
+                            <div class="size-option"><input type="radio" name="f1" id="f1s2"><label for="f1s2"><span class="size-name">30*40</span><span class="size-price">$25</span></label></div>
+                        </div>
+                    </div>
+                    <a href="https://ig.me/m/orlume.lb?text=I%20want%20to%20order%20Customized%20Football%20Art" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
+                </div>
+            </div>
+
+            <!-- FB 2 -->
+            <div class="work-card">
+                <div class="work-img-box lightbox-trigger">
+                    <img src="images/fb2.jpg" alt="Football Art 2">
+                </div>
+                <div class="work-info">
+                    <h3 class="work-title" data-en="Legacy Series" data-ar="سلسلة الإرث">Legacy Series</h3>
+                    <div class="order-options">
+                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
+                        <div class="size-grid">
+                            <div class="size-option"><input type="radio" name="f2" id="f2s1" checked><label for="f2s1"><span class="size-name">20*30</span><span class="size-price">$15</span></label></div>
+                            <div class="size-option"><input type="radio" name="f2" id="f2s2"><label for="f2s2"><span class="size-name">30*40</span><span class="size-price">$20</span></label></div>
+                        </div>
+                    </div>
+                    <a href="https://ig.me/m/orlume.lb?text=I%20want%20to%20order%20Football%20Art:%20Legacy" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
+                </div>
+            </div>
+
+            <!-- FB 3 -->
+            <div class="work-card">
+                <div class="work-img-box lightbox-trigger">
+                    <img src="images/fb3.jpg" alt="Football Art 3">
+                </div>
+                <div class="work-info">
+                    <h3 class="work-title" data-en="Golden Goal" data-ar="الهدف الذهبي">Golden Goal</h3>
+                    <div class="order-options">
+                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
+                        <div class="size-grid">
+                            <div class="size-option"><input type="radio" name="f3" id="f3s1" checked><label for="f3s1"><span class="size-name">20*30</span><span class="size-price">$15</span></label></div>
+                            <div class="size-option"><input type="radio" name="f3" id="f3s2"><label for="f3s2"><span class="size-name">30*40</span><span class="size-price">$20</span></label></div>
+                        </div>
+                    </div>
+                    <a href="https://ig.me/m/orlume.lb?text=I%20want%20to%20order%20Football%20Art:%20Golden%20Goal" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
+                </div>
+            </div>
+
+            <!-- FB 4 -->
+            <div class="work-card">
+                <div class="work-img-box lightbox-trigger">
+                    <img src="images/fb4.jpg" alt="Football Art 4">
+                </div>
+                <div class="work-info">
+                    <h3 class="work-title" data-en="Stadium Lights" data-ar="أضواء الملعب">Stadium Lights</h3>
+                    <div class="order-options">
+                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
+                        <div class="size-grid">
+                            <div class="size-option"><input type="radio" name="f4" id="f4s1" checked><label for="f4s1"><span class="size-name">20*30</span><span class="size-price">$15</span></label></div>
+                            <div class="size-option"><input type="radio" name="f4" id="f4s2"><label for="f4s2"><span class="size-name">30*40</span><span class="size-price">$20</span></label></div>
+                        </div>
+                    </div>
+                    <a href="https://ig.me/m/orlume.lb?text=I%20want%20to%20order%20Football%20Art:%20Stadium%20Lights" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARS ART CATEGORY -->
+    <div class="category-section">
+        <div class="section-header">
+            <h2 data-en="Cars Art" data-ar="فن السيارات">Cars Art</h2>
+        </div>
+        <div class="grid-container">
+            <!-- Car 1 -->
+            <div class="work-card">
+                <div class="work-img-box lightbox-trigger">
+                    <img src="images/car1.jpg" alt="Car Art 1">
+                </div>
+                <div class="work-info">
+                    <h3 class="work-title" data-en="Velocity" data-ar="السرعة">Velocity</h3>
+                    <div class="order-options">
+                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
+                        <div class="size-grid">
+                            <div class="size-option"><input type="radio" name="c1" id="c1s1" checked><label for="c1s1"><span class="size-name">20*30</span><span class="size-price">$15</span></label></div>
+                            <div class="size-option"><input type="radio" name="c1" id="c1s2"><label for="c1s2"><span class="size-name">30*40</span><span class="size-price">$20</span></label></div>
+                        </div>
+                    </div>
+                    <a href="https://ig.me/m/orlume.lb?text=I%20want%20to%20order%20Car%20Art:%20Velocity" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
+                </div>
+            </div>
+
+            <!-- Car 2 -->
+            <div class="work-card">
+                <div class="work-img-box lightbox-trigger">
+                    <img src="images/car2.jpg" alt="Car Art 2">
+                </div>
+                <div class="work-info">
+                    <h3 class="work-title" data-en="Classic Chrome" data-ar="كروم كلاسيكي">Classic Chrome</h3>
+                    <div class="order-options">
+                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
+                        <div class="size-grid">
+                            <div class="size-option"><input type="radio" name="c2" id="c2s1" checked><label for="c2s1"><span class="size-name">20*30</span><span class="size-price">$15</span></label></div>
+                            <div class="size-option"><input type="radio" name="c2" id="c2s2"><label for="c2s2"><span class="size-name">30*40</span><span class="size-price">$20</span></label></div>
+                        </div>
+                    </div>
+                    <a href="https://ig.me/m/orlume.lb?text=I%20want%20to%20order%20Car%20Art:%20Classic" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
+                </div>
+            </div>
+
+            <!-- Car 3 -->
+            <div class="work-card">
+                <div class="work-img-box lightbox-trigger">
+                    <img src="images/car3.jpg" alt="Car Art 3">
+                </div>
+                <div class="work-info">
+                    <h3 class="work-title" data-en="Night Drive" data-ar="قيادة ليلية">Night Drive</h3>
+                    <div class="order-options">
+                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
+                        <div class="size-grid">
+                            <div class="size-option"><input type="radio" name="c3" id="c3s1" checked><label for="c3s1"><span class="size-name">20*30</span><span class="size-price">$15</span></label></div>
+                            <div class="size-option"><input type="radio" name="c3" id="c3s2"><label for="c3s2"><span class="size-name">30*40</span><span class="size-price">$20</span></label></div>
+                        </div>
+                    </div>
+                    <a href="https://ig.me/m/orlume.lb?text=I%20want%20to%20order%20Car%20Art:%20Night%20Drive" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
+                </div>
+            </div>
+
+            <!-- Car 4 -->
+            <div class="work-card">
+                <div class="work-img-box lightbox-trigger">
+                    <img src="images/car4.jpg" alt="Car Art 4">
+                </div>
+                <div class="work-info">
+                    <h3 class="work-title" data-en="Midnight Drift" data-ar="درفت منتصف الليل">Midnight Drift</h3>
+                    <div class="order-options">
+                        <label data-en="Dimension" data-ar="المقاس">Dimension</label>
+                        <div class="size-grid">
+                            <div class="size-option"><input type="radio" name="c4" id="c4s1" checked><label for="c4s1"><span class="size-name">20*30</span><span class="size-price">$15</span></label></div>
+                            <div class="size-option"><input type="radio" name="c4" id="c4s2"><label for="c4s2"><span class="size-name">30*40</span><span class="size-price">$20</span></label></div>
+                        </div>
+                    </div>
+                    <a href="https://ig.me/m/orlume.lb?text=I%20want%20to%20order%20Car%20Art:%20Drift" target="_blank" class="order-btn" data-en="Order" data-ar="اطلب">Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <img src="images/orlume.png" alt="Orlume Logo" class="footer-logo">
@@ -348,10 +376,8 @@
 
         document.querySelectorAll('.lightbox-trigger img').forEach(img => {
             img.onclick = () => { 
-                setTimeout(() => {
-                    lightbox.style.display = 'flex'; 
-                    lightboxImg.src = img.src; 
-                }, 100); 
+                lightbox.style.display = 'flex'; 
+                lightboxImg.src = img.src; 
             };
         });
 
